@@ -11,3 +11,9 @@ module.exports.obtenerProductos = (req, res) => {
     .then((productos) => res.json(productos))
     .catch((err) => res.json(err));
 };
+
+module.exports.obtenerProducto = (req, res) => {
+  Producto.findById(req.params.id)
+    .then((producto) => res.json(producto))
+    .catch((err) => res.json(err));
+};
