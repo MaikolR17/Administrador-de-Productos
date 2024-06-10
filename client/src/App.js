@@ -9,17 +9,12 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <h1> Product Manager </h1>
         <Routes>
-          <Route path="/" element={
-            <>
-              <h1> Product Manager </h1>
-              <FormularioProducto />
-              <hr></hr>
-              <ListaProductos />
-            </>
-          } />
-          
-          <Route  path="/productos/:id" element={<DetallesProducto />} />
+          <Route path="/" element={<ListaProductos />} />
+          <Route path="/productos/:id" element={<DetallesProducto />} />
+          <Route path="/productos/:id/edit" element={<FormularioProducto isEdit={true} /> } />
+          <Route path="/crear" element={<FormularioProducto />} />
         </Routes>
       </div>
     </Router>

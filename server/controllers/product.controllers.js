@@ -17,3 +17,15 @@ module.exports.obtenerProducto = (req, res) => {
     .then((producto) => res.json(producto))
     .catch((err) => res.json(err));
 };
+
+module.exports.actualizarProducto = (req, res) => {
+  Producto.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+    .then((producto) => res.json(producto))
+    .catch((err) => res.json(err));
+};
+
+module.exports.eliminarProducto = (req, res) => { 
+  Producto.findByIdAndDelete(req.params.id)
+   .then((producto) => res.json(producto))
+   .catch((err) => res.json(err));
+}

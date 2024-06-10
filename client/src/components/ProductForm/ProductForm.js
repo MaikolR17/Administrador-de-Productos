@@ -1,30 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./Producto.css";
 
-const FormularioProducto = () => {
+const FormularioProducto = ({ isEdit = false}) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (isEdit) {
+      axios.get(`http://localhost:8000/api/productos/${id}`)
+        .then(res => {
+          setTitle(res.data.title);
+          setPrice(res.data.price);
+          setDescription(res.data.description);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [id, isEdit]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    const NuevoProducto = {
+    const producto = {
       title,
       price,
       description,
     };
 
-    axios.post("http://localhost:8000/api/productos", NuevoProducto)
-      .then((res) => {
-        console.log(res);
-        setTitle("");
-        setPrice("");
-        setDescription("");
-      })
-      .catch((err) => console.error(err));
+    if (isEdit) {
+      axios
+        .put(`http://localhost:8000/api/productos/${id}`, producto)
+        .then((res) => {
+          console.log(res);
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios.post("http://localhost:8000/api/productos", producto)
+        .then((res) => {
+          console.log(res);
+          setTitle("");
+          setPrice("");
+          setDescription("");
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
@@ -50,7 +75,7 @@ const FormularioProducto = () => {
           onChange={(e) => setDescription(e.target.value)}
           value={description} />
       </div>
-      <button type="submit"> Create </button>
+      <button type="submit"> {isEdit ? "Update" : "Create"} </button>
     </form>
   );
 };
