@@ -5,9 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./Producto.css";
 
 const FormularioProducto = ({ isEdit = false}) => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
+  const [product, setProduct] = useState({ title: "", price: "", description: "", });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -15,9 +13,7 @@ const FormularioProducto = ({ isEdit = false}) => {
     if (isEdit) {
       axios.get(`http://localhost:8000/api/productos/${id}`)
         .then(res => {
-          setTitle(res.data.title);
-          setPrice(res.data.price);
-          setDescription(res.data.description);
+          setProduct(res.data);
         })
         .catch(err => console.log(err));
     }
@@ -26,31 +22,21 @@ const FormularioProducto = ({ isEdit = false}) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    const producto = {
-      title,
-      price,
-      description,
-    };
-
-    if (isEdit) {
-      axios
-        .put(`http://localhost:8000/api/productos/${id}`, producto)
-        .then((res) => {
-          console.log(res);
-          navigate("/");
-        })
-        .catch((err) => console.log(err));
-    } else {
-      axios.post("http://localhost:8000/api/productos", producto)
-        .then((res) => {
-          console.log(res);
-          setTitle("");
-          setPrice("");
-          setDescription("");
-        })
-        .catch((err) => console.error(err));
-    }
+    const apiCall = isEdit
+      ? axios.put(`http://localhost:8000/api/productos/${id}`, product)
+      : axios.post("http://localhost:8000/api/productos", product);
+    
+    apiCall.then(res => {
+      console.log(res);
+      navigate("/");
+    }).catch(err => console.error(err));
   };
+
+  const OnChangeHandler = (e) => {
+    setProduct({
+     ...product,
+      [e.target.name]: e.target.value});
+  }
 
   return (
     <form onSubmit={onSubmitHandler}>
@@ -58,22 +44,25 @@ const FormularioProducto = ({ isEdit = false}) => {
         <label> Title: </label>
         <input
           type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title} />
+          name="title"
+          onChange={OnChangeHandler}
+          value={product.title} />
       </div>
       <div>
         <label> Price: </label>
         <input
           type="number"
-          onChange={(e) => setPrice(e.target.value)}
-          value={price} />
+          name="price"
+          onChange={OnChangeHandler}
+          value={product.price} />
       </div>
       <div>
         <label> Description: </label>
         <input
           type="text"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description} />
+          name="description"
+          onChange={OnChangeHandler}
+          value={product.description} />
       </div>
       <button type="submit"> {isEdit ? "Update" : "Create"} </button>
     </form>

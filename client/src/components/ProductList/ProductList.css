@@ -13,7 +13,7 @@ a{
 }
 
 button {
-    margin: 5px 0px;
+    margin: 5px 0px 5px 5px;
     padding: 5px 10px;
     background-color: white;
     color: black;
@@ -22,4 +22,17 @@ button {
     cursor: pointer;
     border: 2px solid black;
     box-shadow: 2px 2px black;
+}
+
+.edit{
+    margin: 5px 5px 5px 0px;
+    padding: 3px 10px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    border: 2px solid black;
+    box-shadow: 2px 2px black;
+    text-decoration: none;
 }
