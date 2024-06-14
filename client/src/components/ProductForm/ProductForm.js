@@ -11,7 +11,7 @@ const FormularioProducto = ({ isEdit = false}) => {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`https://administrador-de-productos.onrender.com//api/productos/${id}`)
+      axios.get(`https://administrador-de-productos.onrender.com/api/productos/${id}`)
         .then(res => {
           setProduct(res.data);
         })
