@@ -11,7 +11,7 @@ const DetallesProducto = () => {
     const [producto, setProducto] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/productos/${id}`)
+        axios.get(`https://administrador-de-productos.onrender.com/api/productos/${id}`)
             .then(res => setProducto(res.data))
             .catch(err => console.log(err));
     }, [id]);

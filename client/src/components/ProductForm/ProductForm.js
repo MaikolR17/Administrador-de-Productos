@@ -11,7 +11,7 @@ const FormularioProducto = ({ isEdit = false}) => {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`http://localhost:8000/api/productos/${id}`)
+      axios.get(`https://administrador-de-productos.onrender.com//api/productos/${id}`)
         .then(res => {
           setProduct(res.data);
         })
@@ -23,8 +23,8 @@ const FormularioProducto = ({ isEdit = false}) => {
     e.preventDefault();
 
     const apiCall = isEdit
-      ? axios.put(`http://localhost:8000/api/productos/${id}`, product)
-      : axios.post("http://localhost:8000/api/productos", product);
+      ? axios.put(`https://administrador-de-productos.onrender.com/api/productos/${id}`, product)
+      : axios.post("https://administrador-de-productos.onrender.com/api/productos", product);
     
     apiCall.then(res => {
       console.log(res);

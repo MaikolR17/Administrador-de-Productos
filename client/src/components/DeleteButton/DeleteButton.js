@@ -6,7 +6,7 @@ const DeleteButton = ({ productId, onSucess }) => {
     const navigate = useNavigate();
 
     const deleteProduct = () => {
-        axios.delete(`http://localhost:8000/api/productos/${productId}`)
+        axios.delete(`https://administrador-de-productos.onrender.com/api/productos/${productId}`)
             .then(res => {
                 console.log(res);
                 onSucess && onSucess();

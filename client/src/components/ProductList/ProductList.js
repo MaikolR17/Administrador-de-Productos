@@ -9,7 +9,7 @@ const ListaProductos = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/productos')
+        axios.get('https://administrador-de-productos.onrender.com/api/productos')
             .then(res => setProductos(res.data))
             .catch(err => console.log(err));
     }, []);
